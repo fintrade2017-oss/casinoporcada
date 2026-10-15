@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isla Porcada | Aman Resorts Private Reserve</title>
+    <style>
+        :root {
+            --gold: #C5A059;
+            --gold-light: #E6C888;
+            --dark-bg: #0a0a0a;
+            --panel-bg: #141414;
+            --text-main: #e0e0e0;
+            --text-muted: #888;
+            --accent: #1a2a3a; /* Pacific Dark Blue */
+            --success: #4CAF50;
+            --font-serif: 'Times New Roman', serif;
+            --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Typography & Utilities --- */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            color: var(--gold);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--gold);
+            color: var(--dark-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--gold);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .center-wrap {
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #222;
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 80vh;
+            /* AJUSTE: Reducida la oscuridad del degradado de 0.7 a 0.4 para que la imagen se vea mejor */
+            /* AJUSTE: Añadida la ruta "images/" por si la imagen está en esa carpeta. Si NO está en una carpeta, borra "images/" y deja solo "MONTEPACI.PNG" */
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('images/MONTEPACI.PNG') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        }
+
+        /* --- Stats Grid --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--panel-bg);
+            padding: 30px;
+            border: 1px solid #333;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: var(--gold-light);
+            font-family: var(--font-serif);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Ecosystem Section --- */
+        .ecosystem-section {
+            background: var(--panel-bg);
+            padding: 60px 20px;
+            margin: 40px 0;
+            border-left: 4px solid var(--gold);
+        }
+
+        .ecosystem-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        /* --- Tournaments Section --- */
+        .tournaments-section {
+            padding: 60px 20px;
+            margin: 60px 0;
+            background: #0f0f0f;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .tournaments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tour-card {
+            background: #1a1a1a;
+            padding: 30px;
+            border: 1px solid #333;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tour-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .tour-icon { font-size: 3rem; margin-bottom: 20px; }
+        .tour-title { font-size: 1.5rem; margin-bottom: 10px; color: var(--gold); }
+        .tour-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
+
+        /* --- CAPEX SECTION --- */
+        .capex-section {
+            padding: 60px 20px;
+            margin: 60px 0;
+            background: linear-gradient(to bottom, var(--dark-bg), #111);
+        }
+
+        .capex-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .cost-item {
+            background: #1a1a1a;
+            padding: 25px;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cost-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gold);
+        }
+
+        .cost-icon { font-size: 2rem; margin-bottom: 15px; color: var(--gold-light); }
+        .cost-title { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
+        .cost-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
+        .cost-amount { font-size: 1.5rem; color: var(--gold); font-family: var(--font-serif); font-weight: bold; }
+
+        .total-capex-card {
+            background: var(--accent);
+            border: 1px solid var(--gold);
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* --- LABOR SECTION --- */
+        .labor-section {
+            padding: 60px 20px;
+            background: #0f0f0f;
+            margin-top: 40px;
+        }
+
+        .labor-table-container {
+            overflow-x: auto;
+            margin-top: 30px;
+            background: var(--panel-bg);
+            border: 1px solid #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background-color: #1a1a1a;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        tr:hover {
+            background-color: #1f1f1f;
+        }
+
+        .amount-col {
+            text-align: right;
+            font-family: var(--font-serif);
+            color: #fff;
+        }
+
+        .total-labor-card {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-left: 4px solid var(--success);
+        }
+
+        /* --- Casino Simulator --- */
+        .casino-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        @media (max-width: 900px) {
+            .casino-dashboard { grid-template-columns: 1fr; }
+        }
+
+        .controls-panel, .results-panel {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .control-group { margin-bottom: 25px; }
+        .control-group label { display: block; margin-bottom: 10px; color: var(--gold); font-size: 0.9rem; text-transform: uppercase; }
+        
+        .slider-container { display: flex; align-items: center; gap: 15px; }
+        input[type="range"] { flex: 1; accent-color: var(--gold); }
+
+        .game-toggles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .game-btn {
+            background: #222; border: 1px solid #444; color: #fff; padding: 15px;
+            cursor: pointer; text-align: left; transition: all 0.2s; position: relative;
+        }
+        .game-btn.active { background: var(--accent); border-color: var(--gold); color: var(--gold); }
+        .game-btn small { display: block; color: var(--text-muted); font-size: 0.7rem; margin-top: 5px; }
+
+        .big-number { font-size: 3rem; color: var(--success); font-family: var(--font-serif); margin: 20px 0; display: block; }
+        .explanation-box { background: rgba(255,255,255,0.05); padding: 15px; margin-top: 20px; font-size: 0.9rem; border-left: 2px solid var(--text-muted); }
+
+        .chart-placeholder {
+            height: 200px; display: flex; align-items: flex-end; justify-content: center; gap: 20px;
+            padding: 20px; border-bottom: 1px solid #444; margin-bottom: 20px;
+        }
+        .bar { width: 50px; background: var(--gold); transition: height 0.5s ease; position: relative; }
+        .bar span { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; white-space: nowrap; color: var(--text-muted); }
+
+        /* --- Footer --- */
+        footer {
+            background: #000; padding: 40px 20px; text-align: center;
+            border-top: 1px solid #222; color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">
+                <img src="logo.png" alt="Resort Logo" class="logo-img">
+                <img src="logo1.png" alt="Partner Logo" class="logo-img">
+            </div>
+            <div class="lang-switch">
+                <button id="langToggle" class="btn" onclick="toggleLanguage()">EN / ES</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 data-i18n="heroTitle">Paraíso Privado en el Pacífico</h1>
+        <p data-i18n="heroSubtitle">Un santuario exclusivo gestionado por Aman Resorts con diseño de interiores de Denniston. Accesible solo por aire o mar.</p>
+    </section>
+
+    <!-- Resort Stats -->
+    <section class="container">
+        <div class="center-wrap">
+            <h2 class="section-title" data-i18n="inventoryTitle">Inventario Exclusivo</h2>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">100</span>
+                <span class="stat-label" data-i18n="suites">Suites de Lujo</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50</span>
+                <span class="stat-label" data-i18n="cabins">Cabañas Overwater</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50</span>
+                <span class="stat-label" data-i18n="villas">Villas Beachfront</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2</span>
+                <span class="stat-label" data-i18n="oasis">Conceptos Oasis (20-40 pax)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem / Legal Loophole -->
+    <section class="container">
+        <div class="ecosystem-section">
+            <div class="ecosystem-content">
+                <div class="ecosystem-text">
+                    <h3 data-i18n="ecosystemTitle">El Ecosistema Soberano</h3>
+                    <br>
+                    <p data-i18n="ecosystemDesc1" style="margin-bottom: 15px;">
+                        Aunque la ley panameña exige ciertas densidades hoteleras para licencias de juego, nuestro proyecto opera bajo una excepción de "Ecosistema Turístico Integral".
+                    </p>
+                    <p data-i18n="ecosystemDesc2">
+                        Al ser una isla accesible solo vía <strong>Pista Privada para Jets</strong> y <strong>Marina para Yates</strong>, ofrecemos un acceso controlado que garantiza privacidad absoluta para nuestros huéspedes de Aman Resorts.
+                    </p>
+                </div>
+                <div class="ecosystem-visual">
+                    <div class="icon-box">
+                        <div style="font-size:2rem; margin-bottom:10px;">✈️</div>
+                        <div data-i18n="jetAccess">Acceso Jet Privado</div>
+                    </div>
+                    <div class="icon-box">
+                        <div style="font-size:2rem; margin-bottom:10px;">🛥️</div>
+                        <div data-i18n="yachtAccess">Marina & Yachts</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tournaments Section -->
+    <section class="tournaments-section">
+        <div class="container">
+            <div class="center-wrap">
+                <h2 class="section-title" data-i18n="tournamentsTitle">Torneos Internacionales</h2>
+                <p style="color:var(--text-muted); max-width:800px; margin:0 auto;" data-i18n="tournamentsSubtitle">
+                    Eventos exclusivos diseñados para atraer a la élite global y maximizar la ocupación y el juego en el casino.
+                </p>
+            </div>
+            <div class="tournaments-grid">
+                <div class="tour-card">
+                    <div class="tour-icon">👑</div>
+                    <h4 class="tour-title" data-i18n="tour1Title">Euro-Norteamericano</h4>
+                    <p class="tour-desc" data-i18n="tour1Desc">Enfocado en Poker de Altas Apuestas y Blackjack VIP. Atrae a magnates de Europa y Norteamérica buscando exclusividad.</p>
+                </div>
+                <div class="tour-card">
+                    <div class="tour-icon">🐉</div>
+                    <h4 class="tour-title" data-i18n="tour2Title">Asiático High-Roller</h4>
+                    <p class="tour-desc" data-i18n="tour2Desc">Dedicado al Baccarat de límites máximos. Diseñado para el mercado asiático, garantizando las mesas de mayor volumen de dinero del mundo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAPEX Cost Section -->
+    <section class="capex-section" id="capex">
+        <div class="container">
+            <div class="center-wrap">
+                <h2 class="section-title" data-i18n="capexTitle">Desglose de Inversión: Casino 500m²</h2>
+                <p style="color:var(--text-muted);" data-i18n="capexSubtitle">Estimación de costos iniciales para la construcción y puesta en marcha del "The Fan Lounge" en Isla Porcada.</p>
+            </div>
+
+            <div class="capex-grid">
+                <div class="cost-item">
+                    <div class="cost-icon">🏗️</div>
+                    <div class="cost-title" data-i18n="constTitle">Construcción y Acabados</div>
+                    <div class="cost-desc" data-i18n="constDesc">Estructura de 500m², aislamiento acústico de grado militar, aire acondicionado silencioso, interiores diseñados por Denniston (mármol, onix, madera treated). Incluye logística de transporte a la isla.</div>
+                    <div class="cost-amount">$2,100,000</div>
+                </div>
+                <div class="cost-item">
+                    <div class="cost-icon">🎰</div>
+                    <div class="cost-title" data-i18n="equipTitle">Equipamiento de Juego</div>
+                    <div class="cost-desc" data-i18n="equipDesc">15 mesas personalizadas, tragamonedas High-Limit (Bally/IGT), shuffledores automáticos, sistemas de contadores de billetes, chips de cerámica de seguridad personalizada.</div>
+                    <div class="cost-amount">$750,000</div>
+                </div>
+                <div class="cost-item">
+                    <div class="cost-icon">⚖️</div>
+                    <div class="cost-title" data-i18n="legalTitle">Licencias y Trámites</div>
+                    <div class="cost-desc" data-i18n="legalDesc">Licencia de operación de casino (MJCP), estudios de impacto ambiental específicos para zona de juego, permisos de importación de equipos, honorarios legales para la estructura de alianza.</div>
+                    <div class="cost-amount">$850,000</div>
+                </div>
+                <div class="cost-item">
+                    <div class="cost-icon">🛡️</div>
+                    <div class="cost-title" data-i18n="secTitle">Seguridad y Tecnología</div>
+                    <div class="cost-desc" data-i18n="secDesc">Sistema CCTV con reconocimiento facial integrado a la marina y pista de aterrizaje, caja fuerte anti-explosión, biometría de entrada, conexión satelital redundante para datos.</div>
+                    <div class="cost-amount">$600,000</div>
+                </div>
+            </div>
+            <div class="total-capex-card">
+                <h4 data-i18n="totalInvestLabel">Inversión Total Estimada (CAPEX)</h4>
+                <div class="stat-number" style="color:var(--gold); margin-top:10px;">$4,300,000 USD</div>
+                <p style="font-size:0.9rem; color:#aaa; margin-top:10px;" data-i18n="contingencyNote">*Incluye un 10% de contingencia para imprevistos logísticos en la isla.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LABOR Cost Section -->
+    <section class="labor-section" id="labor">
+        <div class="container">
+            <div class="center-wrap">
+                <h2 class="section-title" data-i18n="laborTitle">Costos Operativos: Personal y Logística</h2>
+                <p style="color:var(--text-muted); max-width:800px; margin:0 auto;" data-i18n="laborSubtitle">
+                    Nómina mensual estimada para operar el casino 24/7. El personal reside en el continente (La Chorrera/Arraiján) con traslado diario en lancha privada pagado por la empresa.
+                </p>
+            </div>
+
+            <div class="labor-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="tblRole">Perfil / Puesto</th>
+                            <th data-i18n="tblQty">Cantidad</th>
+                            <th data-i18n="tblSalary">Salario Bruto (USD)</th>
+                            <th class="amount-col" data-i18n="tblTotal">Total Mensual</th>
+                        </tr>
+                    </thead>
+                    <tbody id="laborTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="total-labor-card">
+                <div>
+                    <h3 data-i18n="totalLaborCostLabel">Costo Mensual Total de Personal (OPEX)</h3>
+                    <p style="font-size:0.85rem; color:var(--text-muted);" data-i18n="laborNote">Incluye Salario Bruto + CSS (12.25%) + Subsidio Vivienda + Transporte.</p>
+                </div>
+                <div style="font-size: 2.5rem; color: var(--gold); font-family: var(--font-serif); font-weight: bold;" id="totalLaborDisplay">
+                    $0
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Casino Simulator Section -->
+    <section class="container" id="casino-section">
+        <div class="center-wrap">
+            <h2 class="section-title" data-i18n="casinoTitle">Simulador de Rentabilidad: "The Fan Lounge"</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: var(--text-muted);" data-i18n="casinoSubtitle">
+                Diseñe la sala de juego exclusiva para magnates. Analice comisiones (House Edge), costos operativos y proyecciones de ganancia neta.
+            </p>
+        </div>
+
+        <div class="casino-dashboard">
+            <!-- Left: Controls -->
+            <div class="controls-panel">
+                <h3 data-i18n="configGames">1. Configuración de Juegos</h3>
+                <br>
+                <div class="game-toggles" id="gameContainer"></div>
+
+                <br>
+                <h3 data-i18n="configParams">2. Parámetros Operativos</h3>
+                <br>
+                
+                <div class="control-group">
+                    <label data-i18n="betLabel">Apuesta Promedio por Mano ($)</label>
+                    <div class="slider-container">
+                        <input type="range" id="avgBet" min="1000" max="50000" step="1000" value="5000" oninput="updateSimulation()">
+                        <span id="avgBetVal">$5,000</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label data-i18n="handsLabel">Manos / Tiradas por Hora (Promedio)</label>
+                    <div class="slider-container">
+                        <input type="range" id="handsHour" min="20" max="100" step="5" value="60" oninput="updateSimulation()">
+                        <span id="handsHourVal">60</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label data-i18n="occupancyLabel">Ocupación de Mesas (%)</label>
+                    <div class="slider-container">
+                        <input type="range" id="occupancy" min="10" max="100" step="5" value="70" oninput="updateSimulation()">
+                        <span id="occupancyVal">70%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Results -->
+            <div class="results-panel">
+                <h3 data-i18n="projectionsTitle">Proyecciones Mensuales</h3>
+                <br>
+                
+                <div class="chart-placeholder">
+                    <div class="bar" id="barRevenue" style="height: 50%; background-color: var(--gold);">
+                        <span data-i18n="revenueChart">Ingresos</span>
+                    </div>
+                    <div class="bar" id="barProfit" style="height: 30%; background-color: var(--success);">
+                        <span data-i18n="profitChart">Ganancia Neta</span>
+                    </div>
+                </div>
+
+                <div style="text-align: left;">
+                    <p data-i18n="totalRevenue">Total Apostado (Handle)</p>
+                    <div class="big-number" id="totalHandleDisplay">$0</div>
+                    <hr style="border: 0; border-top: 1px solid #333; margin: 15px 0;">
+                    
+                    <p data-i18n="houseWin">Ganancia de la Casa (Comisiones)</p>
+                    <div class="big-number" id="houseWinDisplay" style="color: var(--gold);">$0</div>
+
+                    <div class="explanation-box" id="businessExplanation"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Ecoresort La Porcada by Takyma Investment Pioneer</p>
+            <p style="font-size: 0.8rem; margin-top: 10px;" data-i18n="disclaimer">Este simulador es para fines de estimación conceptual preliminar. Los resultados reales dependen de la gestión operativa.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- LABOR DATA ---
+        const laborData = [
+            { id: 'manager', roleEs: 'Casino Manager', roleEn: 'Casino Manager', qty: 1, salary: 5000, subsidy: 500 },
+            { id: 'supervisor', roleEs: 'Pit Boss / Supervisor de Piso', roleEn: 'Pit Boss / Floor Supervisor', qty: 2, salary: 2800, subsidy: 400 },
+            { id: 'dealer', roleEs: 'Croupier / Dealer (Bilingüe)', roleEn: 'Croupier / Dealer (Bilingual)', qty: 10, salary: 1800, subsidy: 350 },
+            { id: 'cashier', roleEs: 'Cajero de Cage (VIP)', roleEn: 'Cage Cashier (VIP)', qty: 2, salary: 1800, subsidy: 350 },
+            { id: 'security', roleEs: 'Seguridad CCTV & Piso', roleEn: 'CCTV & Floor Security', qty: 2, salary: 2000, subsidy: 350 },
+            { id: 'waiter', roleEs: 'Camarero VIP', roleEn: 'VIP Waiter', qty: 4, salary: 1200, subsidy: 300 },
+            { id: 'cleaner', roleEs: 'Limpieza de Salón', roleEn: 'Floor Housekeeper', qty: 2, salary: 900, subsidy: 300 },
+            { id: 'transport', roleEs: 'Capitán de Lancha (Logística Staff)', roleEn: 'Boat Captain (Staff Logistics)', qty: 3, salary: 1500, subsidy: 300 }
+        ];
+
+        const EMPLOYER_TAX_RATE = 0.1225;
+
+        // --- TRANSLATION DATA ---
+        const translations = {
+            es: {
+                heroTitle: "Paraíso Privado en el Pacífico",
+                heroSubtitle: "Un santuario exclusivo gestionado por Aman Resorts con diseño de interiores de Denniston. Accesible solo por aire o mar.",
+                inventoryTitle: "Inventario Exclusivo",
+                suites: "Suites de Lujo",
+                cabins: "Cabañas Overwater",
+                villas: "Villas Beachfront",
+                oasis: "Conceptos Oasis (20-40 pax)",
+                ecosystemTitle: "El Ecosistema Soberano",
+                ecosystemDesc1: "Aunque la ley panameña exige ciertas densidades hoteleras para licencias de juego, nuestro proyecto opera bajo una excepción de 'Ecosistema Turístico Integral'.",
+                ecosystemDesc2: "Al ser una isla accesible solo vía Pista Privada para Jets y Marina para Yachts, ofrecemos un acceso controlado que garantiza privacidad absoluta para nuestros huéspedes de Aman Resorts.",
+                jetAccess: "Acceso Jet Privado",
+                yachtAccess: "Marina & Yachts",
+                tournamentsTitle: "Torneos Internacionales",
+                tournamentsSubtitle: "Eventos exclusivos diseñados para atraer a la élite global y maximizar la ocupación y el juego en el casino.",
+                tour1Title: "Euro-Norteamericano",
+                tour1Desc: "Enfocado en Poker de Altas Apuestas y Blackjack VIP. Atrae a magnates de Europa y Norteamérica buscando exclusividad.",
+                tour2Title: "Asiático High-Roller",
+                tour2Desc: "Dedicado al Baccarat de límites máximos. Diseñado para el mercado asiático, garantizando las mesas de mayor volumen de dinero del mundo.",
+                capexTitle: "Desglose de Inversión: Casino 500m²",
+                capexSubtitle: "Estimación de costos iniciales para la construcción y puesta en marcha del 'The Fan Lounge' en Isla Porcada.",
+                constTitle: "Construcción y Acabados",
+                constDesc: "Estructura de 500m², aislamiento acústico de grado militar, aire acondicionado silencioso, interiores diseñados por Denniston (mármol, onix, madera treated). Incluye logística de transporte a la isla.",
+                equipTitle: "Equipamiento de Juego",
+                equipDesc: "15 mesas personalizadas, tragamonedas High-Limit (Bally/IGT), shuffledores automáticos, sistemas de contadores de billetes, chips de cerámica de seguridad personalizada.",
+                legalTitle: "Licencias y Trámites",
+                legalDesc: "Licencia de operación de casino (MJCP), estudios de impacto ambiental específicos para zona de juego, permisos de importación de equipos, honorarios legales para la estructura de alianza.",
+                secTitle: "Seguridad y Tecnología",
+                secDesc: "Sistema CCTV con reconocimiento facial integrado a la marina y pista de aterrizaje, caja fuerte anti-explosión, biometría de entrada, conexión satelital redundante para datos.",
+                totalInvestLabel: "Inversión Total Estimada (CAPEX)",
+                contingencyNote: "*Incluye un 10% de contingencia para imprevistos logísticos en la isla.",
+                laborTitle: "Costos Operativos: Personal y Logística",
+                laborSubtitle: "Nómina mensual estimada para operar el casino 24/7. El personal reside en el continente (La Chorrera/Arraiján) con traslado diario en lancha privada pagado por la empresa.",
+                tblRole: "Perfil / Puesto",
+                tblQty: "Cantidad",
+                tblSalary: "Salario Bruto (USD)",
+                tblTotal: "Total Mensual",
+                totalLaborCostLabel: "Costo Mensual Total de Personal (OPEX)",
+                laborNote: "Incluye Salario Bruto + CSS (12.25%) + Subsidio Vivienda + Transporte.",
+                casinoTitle: "Simulador de Rentabilidad: 'The Fan Lounge'",
+                casinoSubtitle: "Diseñe la sala de juego exclusiva para magnates. Analice comisiones (House Edge), costos operativos y proyecciones de ganancia neta.",
+                configGames: "1. Configuración de Juegos",
+                configParams: "2. Parámetros Operativos",
+                betLabel: "Apuesta Promedio por Mano ($)",
+                handsLabel: "Manos / Tiradas por Hora",
+                occupancyLabel: "Ocupación de Mesas (%)",
+                projectionsTitle: "Proyecciones Mensuales",
+                revenueChart: "Ingresos",
+                profitChart: "Utilidad",
+                totalRevenue: "Total Apostado (Handle)",
+                houseWin: "Retención de la Casa (Win)",
+                disclaimer: "Este simulador es para fines de estimación conceptual preliminar. Los resultados reales dependen de la gestión operativa.",
+                gameBaccarat: "Baccarat (Comisión 5%)",
+                gameBaccaratDesc: "Juego favorito de Asia. Ventaja casa: 1.06%.",
+                gameBlackjack: "Blackjack VIP",
+                gameBlackjackDesc: "Ventaja casa: 0.5% si juegan perfecto.",
+                gameRoulette: "Ruleta Europea",
+                gameRouletteDesc: "Un solo cero. Ventaja casa: 2.7%.",
+                gamePoker: "Poker Texas (Rake)",
+                gamePokerDesc: "No jugamos vs jugador. Cobramos comisión por bote.",
+                gameSlots: "Tragamonedas High-Limit",
+                gameSlotsDesc: "Alta volatilidad. Ventaja casa: 8-12%.",
+                explBaccarat: "Ganamos cobrando una comisión del 5% sobre las apuestas ganadoras al 'Banquero'. Es el volumen de dinero más alto.",
+                explPoker: "En el Poker, el casino no arriesga dinero. Cobramos un 'Rake' (ej. 5% del bote, máx $100) por cada mano jugada. Ingreso seguro."
+            },
+            en: {
+                heroTitle: "Private Paradise in the Pacific",
+                heroSubtitle: "An exclusive sanctuary managed by Aman Resorts with interior design by Denniston. Accessible only by air or sea.",
+                inventoryTitle: "Exclusive Inventory",
+                suites: "Luxury Suites",
+                cabins: "Overwater Cabins",
+                villas: "Beachfront Villas",
+                oasis: "Oasis Concepts (20-40 pax)",
+                ecosystemTitle: "The Sovereign Ecosystem",
+                ecosystemDesc1: "While Panamanian law generally requires certain hotel densities for gaming licenses, our project operates under an 'Integrated Tourist Ecosystem' exception.",
+                ecosystemDesc2: "Being an island accessible only via Private Jet Runway and Yacht Marina, we offer controlled access that guarantees absolute privacy for our Aman Resorts guests.",
+                jetAccess: "Private Jet Access",
+                yachtAccess: "Marina & Yachts",
+                tournamentsTitle: "International Tournaments",
+                tournamentsSubtitle: "Exclusive events designed to attract the global elite and maximize casino occupancy and play.",
+                tour1Title: "Euro-North American",
+                tour1Desc: "Focused on High Stakes Poker and VIP Blackjack. Attracts tycoons from Europe and North America seeking exclusivity.",
+                tour2Title: "Asian High-Roller",
+                tour2Desc: "Dedicated to maximum limit Baccarat. Designed for the Asian market, guaranteeing the highest money volume tables in the world.",
+                capexTitle: "Investment Breakdown: 500m² Casino",
+                capexSubtitle: "Estimated initial costs for construction and launch of 'The Fan Lounge' on Isla Porcada.",
+                constTitle: "Construction & Fit-out",
+                constDesc: "500m² structure, military-grade soundproofing, silent HVAC, luxury interiors designed by Denniston (marble, onyx, treated wood). Includes logistics transport to the island.",
+                equipTitle: "Gaming Equipment",
+                equipDesc: "15 custom tables, High-Limit slots (Bally/IGT), automatic shufflers, bill counters, personalized security ceramic chips.",
+                legalTitle: "Licenses & Permits",
+                legalDesc: "Casino operation license (MJCP), specific environmental impact studies for gaming zone, equipment import permits, legal fees for alliance structure.",
+                secTitle: "Security & Technology",
+                secDesc: "CCTV with facial recognition integrated to marina and runway, explosion-proof vault, entry biometrics, redundant satellite data connection.",
+                totalInvestLabel: "Total Estimated Investment (CAPEX)",
+                contingencyNote: "*Includes a 10% contingency for logistical unforeseen events on the island.",
+                laborTitle: "Operational Costs: Staff & Logistics",
+                laborSubtitle: "Estimated monthly payroll for 24/7 casino operation. Staff resides on the mainland (La Chorrera/Arraiján) with daily private boat transfer paid by the company.",
+                tblRole: "Profile / Position",
+                tblQty: "Quantity",
+                tblSalary: "Gross Salary (USD)",
+                tblTotal: "Monthly Total",
+                totalLaborCostLabel: "Total Monthly Staff Cost (OPEX)",
+                laborNote: "Includes Gross Salary + Social Security (12.25%) + Housing Subsidy + Transport.",
+                casinoTitle: "Profitability Simulator: 'The Fan Lounge'",
+                casinoSubtitle: "Design the exclusive gaming lounge for tycoons. Analyze commissions (House Edge), operating costs, and net profit projections.",
+                configGames: "1. Game Configuration",
+                configParams: "2. Operational Parameters",
+                betLabel: "Avg Bet Per Hand ($)",
+                handsLabel: "Hands / Spins Per Hour",
+                occupancyLabel: "Table Occupancy (%)",
+                projectionsTitle: "Monthly Projections",
+                revenueChart: "Revenue",
+                profitChart: "Profit",
+                totalRevenue: "Total Wagered (Handle)",
+                houseWin: "House Win (Retention)",
+                disclaimer: "This simulator is for preliminary conceptual estimation purposes only. Actual results depend on operational management.",
+                gameBaccarat: "Baccarat (5% Commission)",
+                gameBaccaratDesc: "Asian favorite. House edge: 1.06%.",
+                gameBlackjack: "VIP Blackjack",
+                gameBlackjackDesc: "House edge: 0.5% if played perfectly.",
+                gameRoulette: "European Roulette",
+                gameRouletteDesc: "Single zero. House edge: 2.7%.",
+                gamePoker: "Texas Poker (Rake)",
+                gamePokerDesc: "We don't play vs player. We take pot commission.",
+                gameSlots: "High-Limit Slots",
+                gameSlotsDesc: "High volatility. House edge: 8-12%.",
+                explBaccarat: "We earn by charging a 5% commission on winning 'Banker' bets. This generates the highest money volume.",
+                explPoker: "In Poker, the casino risks no money. We charge a 'Rake' (e.g., 5% of pot, capped at $100) per hand. Safe income."
+            }
+        };
+
+        // --- STATE MANAGEMENT ---
+        let currentLang = 'es';
+        
+        const gamesData = [
+            { id: 'baccarat', type: 'table', edge: 0.0106, nameKey: 'gameBaccarat', descKey: 'gameBaccaratDesc', explKey: 'explBaccarat' },
+            { id: 'blackjack', type: 'table', edge: 0.005, nameKey: 'gameBlackjack', descKey: 'gameBlackjackDesc', explKey: 'explBaccarat' }, 
+            { id: 'roulette', type: 'table', edge: 0.027, nameKey: 'gameRoulette', descKey: 'gameRouletteDesc', explKey: 'explBaccarat' },
+            { id: 'poker', type: 'poker', edge: 0, rake: 15, nameKey: 'gamePoker', descKey: 'gamePokerDesc', explKey: 'explPoker' }, 
+            { id: 'slots', type: 'machine', edge: 0.10, nameKey: 'gameSlots', descKey: 'gameSlotsDesc', explKey: 'explBaccarat' }
+        ];
+
+        let activeGames = ['baccarat', 'poker']; // Default selection
+
+        // --- INITIALIZATION ---
+        function init() {
+            renderLaborTable();
+            renderGameButtons();
+            updateSimulation();
+        }
+
+        // --- LANGUAGE HANDLER ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            const elements = document.querySelectorAll('[data-i18n]');
+            
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+
+            // Re-render dynamic parts
+            renderLaborTable();
+            renderGameButtons();
+            updateSimulation(); 
+        }
+
+        function t(key) {
+            return translations[currentLang][key] || key;
+        }
+
+        // --- LABOR LOGIC ---
+        function renderLaborTable() {
+            const tbody = document.getElementById('laborTableBody');
+            tbody.innerHTML = '';
+            let grandTotal = 0;
+
+            laborData.forEach(row => {
+                const role = currentLang === 'es' ? row.roleEs : row.roleEn;
+                
+                // Calculation: (Salary + Subsidy) * Qty * (1 + TaxRate)
+                const baseCostPerPerson = row.salary + row.subsidy;
+                const costWithTaxPerPerson = baseCostPerPerson * (1 + EMPLOYER_TAX_RATE);
+                const totalRow = costWithTaxPerPerson * row.qty;
+
+                grandTotal += totalRow;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${role}</td>
+                    <td>${row.qty}</td>
+                    <td>$${row.salary.toLocaleString()} + $${row.subsidy} (Sub.)</td>
+                    <td class="amount-col">$${Math.floor(totalRow).toLocaleString()}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('totalLaborDisplay').textContent = '$' + Math.floor(grandTotal).toLocaleString();
+        }
+
+        // --- CASINO SIMULATOR LOGIC ---
+
+        function renderGameButtons() {
+            const container = document.getElementById('gameContainer');
+            container.innerHTML = '';
+
+            gamesData.forEach(game => {
+                const btn = document.createElement('div');
+                btn.className = `game-btn ${activeGames.includes(game.id) ? 'active' : ''}`;
+                btn.onclick = () => toggleGame(game.id, btn);
+                
+                const name = t(game.nameKey);
+                const desc = t(game.descKey);
+
+                btn.innerHTML = `
+                    <div>${name}</div>
+                    <small>${desc}</small>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleGame(gameId, btnElement) {
+            if (activeGames.includes(gameId)) {
+                activeGames = activeGames.filter(id => id !== gameId);
+                btnElement.classList.remove('active');
+            } else {
+                activeGames.push(gameId);
+                btnElement.classList.add('active');
+            }
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            // Update Slider Labels
+            document.getElementById('avgBetVal').textContent = '$' + parseInt(document.getElementById('avgBet').value).toLocaleString();
+            document.getElementById('handsHourVal').textContent = document.getElementById('handsHour').value;
+            document.getElementById('occupancyVal').textContent = document.getElementById('occupancy').value + '%';
+
+            // Get Inputs
+            const avgBet = parseInt(document.getElementById('avgBet').value);
+            const handsPerHour = parseInt(document.getElementById('handsHour').value);
+            const occupancy = parseInt(document.getElementById('occupancy').value) / 100;
+
+            // Assumptions for "Super Luxury"
+            const openHoursPerDay = 12; 
+            const daysInMonth = 30;
+            const totalHoursMonthly = openHoursPerDay * daysInMonth; // 360 hours
+
+            let totalMonthlyHandle = 0;
+            let totalMonthlyWin = 0;
+            let explanationHTML = '';
+
+            activeGames.forEach(gameId => {
+                const game = gamesData.find(g => g.id === gameId);
+                let gameWin = 0;
+                let gameHandle = 0;
+                
+                if (game.type === 'poker') {
+                    let estimatedRakePerHand = avgBet * 0.01; 
+                    if(estimatedRakePerHand < 10) estimatedRakePerHand = 10; 
+                    if(estimatedRakePerHand > 150) estimatedRakePerHand = 150; 
+
+                    const pokerHandsPerHour = 30; // Average hands per hour in poker
+                    const revenuePerHour = estimatedRakePerHand * pokerHandsPerHour * occupancy;
+                    gameWin = revenuePerHour * totalHoursMonthly;
+                    
+                    // Corrected Poker Handle Formula: Assuming 6 players at the table, each betting avgBet per hand
+                    gameHandle = (avgBet * 6) * pokerHandsPerHour * totalHoursMonthly * occupancy; 
+                    totalMonthlyHandle += gameHandle;
+                } else {
+                    let effectiveHands = handsPerHour;
+                    if(game.id === 'slots') effectiveHands = 600; // Slots are much faster
+                    const handlePerHour = avgBet * effectiveHands * occupancy;
+                    const handleMonthly = handlePerHour * totalHoursMonthly;
+                    gameWin = handleMonthly * game.edge;
+                    totalMonthlyHandle += handleMonthly;
+                }
+
+                totalMonthlyWin += gameWin;
+                if (!explanationHTML) {
+                    explanationHTML = `<strong>Modelo de Negocio (${t(game.nameKey)}):</strong><br>${t(game.explKey)}`;
+                }
+            });
+
+            document.getElementById('totalHandleDisplay').textContent = '$' + Math.floor(totalMonthlyHandle).toLocaleString();
+            document.getElementById('houseWinDisplay').textContent = '$' + Math.floor(totalMonthlyWin).toLocaleString();
+            document.getElementById('businessExplanation').innerHTML = explanationHTML;
+
+            // Chart visualization (scaled down to fit container visually)
+            const maxCap = 50000000; 
+            const hRevenue = Math.min((totalMonthlyHandle / maxCap) * 100, 100);
+            const hProfit = Math.min((totalMonthlyWin / maxCap) * 100, 100);
+            document.getElementById('barRevenue').style.height = (hRevenue + 5) + '%'; 
+            document.getElementById('barProfit').style.height = (hProfit + 5) + '%';
+        }
+
+        // Run
+        init();
+
+    </script>
+</body>
+</html>
